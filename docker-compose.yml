@@ -1,0 +1,17 @@
+version: "2.0"
+services:
+  product-service:
+    build: ./products
+    ports:
+      - "8000:5000"
+  website:
+    image: "php:8.0-apache"
+    depends_on:
+      - product-service
+    environment: 
+      - APACHE_DOCUMENT_ROOT=/var/www/html
+    volumes:
+      # Volume stockant les fichiers web du projet
+      - ./website:/var/www/html
+    ports:
+      - "8080:80"
